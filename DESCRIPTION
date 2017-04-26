@@ -1,0 +1,19 @@
+Package: enumerations
+Title: Adds an enumeration data type for R to support list of allowed value/label pairs
+Version: 0.1
+Authors@R: person("Jürgen", "Altfeld", email = "R@altfeld-im.de", role = c("aut", "cre", "cph"))
+Description: TODO
+Imports:
+    utils
+Depends:
+    R (>= 3.1.0)
+License: GPL-3 | file LICENSE
+URL: https://github.com/aryoda/R_enumerations
+BugReports: https://github.com/aryoda/R_enumerations/issues
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 5.0.1
+Suggests: testthat,
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
