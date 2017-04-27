@@ -4,10 +4,13 @@
 
 # Initialize ------------------------------------------------------------------------------------------------------
 
-ColorEnum <- list(BLUE = 1L, RED = 2L, BLACK = 3L)
+# The variable must be defined in the global environment since testthat does not find the object
+# when the test is run via "devtools::test".
+# 
+ColorEnum <<- list(BLUE = 1L, RED = 2L, BLACK = 3L)
 
 # Expects an color enum value as input and returns the color value
-color.code = function(color = ColorEnum) { 
+color.code <- function(color = ColorEnum) { 
   i <- match.enum.arg(color) # , ColorEnum)
   # i <- match.arg(color)
   i <- color
@@ -21,8 +24,16 @@ color.code = function(color = ColorEnum) {
 
 test_that("Enum item returns the enum value", {
 
-  expect_equal(color.code(ColorEnum$BLUE), 1L)
+  expect_equal(color.code(ColorEnum$BLUE),   1L)
+  expect_equal(color.code(ColorEnum$RED),    2L)
+  expect_equal(color.code(ColorEnum$BLACK),  3L)
   
+})
+
+test_that("Invalid enum values throw an error", {
+ 
+  expect_error(color.code(0), "'arg' must be one of the values in the 'choices' list: 1, 2, 3", fixed = TRUE)
+   
 })
 
 

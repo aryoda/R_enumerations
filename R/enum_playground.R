@@ -58,19 +58,20 @@ match.enum.arg <- function(arg, choices) {
   # Get the formal arguments of "arg" if no choices were passed in
   if (missing(choices)) {
     formal.args <- formals(sys.function(sys.parent()))
-    print(paste("formal.args = ", formal.args))
-    str(formal.args)
-    print(paste("formal.args[] = ", eval(formal.args[[as.character(substitute(arg))]])))
+    # print(paste("formal.args = ", formal.args))
+    # print(sys.calls())
     choices <- eval(formal.args[[as.character(substitute(arg))]])
+    # print(paste("choices:", choices))
+    # print(paste("arg:", arg))
   }
   
   if(identical(arg, choices))
-    arg <- choices[[1]][1]    # choose the first value of the first list item
+    arg <- choices[[1]]    # choose the first value of the first list item
   
-  allowed.values <- sapply(choices, function(item) {item[1]})   # extract the integer values of the enum items
+  # allowed.values <- sapply(choices, function(item) {item[1]})   # extract the integer values of the enum items
   
-  if(!is.element(arg, allowed.values))
-    stop(paste("'arg' must be one of the values in the 'choices' list:", paste(allowed.values, collapse = ", ")))
+  if(!is.element(arg, choices))
+    stop(paste("'arg' must be one of the values in the 'choices' list:", paste(choices, collapse = ", ")))
   
   return(arg)
 }
