@@ -14,8 +14,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # ***************************************************************************
+#
 
-
+# This code can be found at:
+# https://github.com/aryoda/R_enumerations
 
 # Inspired by:
 # https://stackoverflow.com/questions/33838392/enum-like-arguments-in-r
@@ -33,7 +35,7 @@
 #' @export
 #'
 #' @examples
-create.enum <- function(inputList) {
+create.enum.simple <- function(inputList) {
   # TODO check values
   # if (length(inputList) < 1)
   #   stop ("Enums may not be empty." )
@@ -57,6 +59,40 @@ create.enum <- function(inputList) {
 }
 
 
+
+
+#' Create an enumeration
+#'
+#' @param allowed.values 
+#' @param value.names 
+#'
+#' @return
+#' @export
+#'
+#' @examples
+create.enum <- function(allowed.values,
+                        value.names = make.names(allowed.values, unique = TRUE)) {
+
+  if (length(allowed.values) < 1)
+    stop ("Enums may not be empty. 'allowed.values' must contain at least one element." )
+  
+  if (length(allowed.values) != length(value.names))
+    stop(paste0("'allowed.values' [", length(allowed.values), "] and 'value.names' [", length(value.names), "] must be the same length"))
+
+  unique.values <- unique(allowed.values)
+  
+  if (length(allowed.values) != length(unique.values))
+    stop("'allowed.values' must contain unique elements, but duplicates were found.")
+  
+  
+  
+  new.enum <- as.list(allowed.values)
+  names(new.enum) <- value.names
+  
+  
+  
+  return(new.enum)
+}
 
 
 

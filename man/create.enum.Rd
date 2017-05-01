@@ -2,13 +2,16 @@
 % Please edit documentation in R/enum_playground.R
 \name{create.enum}
 \alias{create.enum}
-\title{Make enums with assigned values or use the name as the value if no value is specified}
+\title{Create an enumeration}
 \usage{
-create.enum(inputList)
+create.enum(allowed.values, value.names = make.names(allowed.values, unique =
+  TRUE))
 }
 \arguments{
-\item{inputList}{}
+\item{allowed.values}{}
+
+\item{value.names}{}
 }
 \description{
-Defines the enum by constructing a list like list(a = "a", b = "b", ...)
+Create an enumeration
 }
