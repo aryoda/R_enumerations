@@ -24,45 +24,35 @@
 
 
 
-
-#' Make enums with assigned values or use the name as the value if no value is specified
+#' Create an enumeration
 #'
-#' Defines the enum by constructing a list like list(a = "a", b = "b", ...)
-#'
-#' @param inputList 
+#' @param allowed.values 
+#' @param value.names 
 #'
 #' @return
 #' @export
 #'
 #' @examples
-create.enum.simple <- function(inputList) {
-  # TODO check values
-  # if (length(inputList) < 1)
-  #   stop ("Enums may not be empty." )
-  # inputList.upper <- toupper(as.character(inputList))
-  # uniqueEnums <- unique(inputList.upper)
-  # if ( ! identical( inputList.upper, uniqueEnums ))
-  #   stop ("Enums must be unique (ignoring case)." )
-  # validNames <- make.names(inputList.upper)   # Make syntactically valid names out of character vectors.
-  # if ( ! identical( inputList.upper, validNames ))
-  #   stop( "Enums must be valid R identifiers." )
+create.enum <- function(allowed.values,
+                        value.names = make.names(allowed.values, unique = TRUE)) {
+  
+  if (length(allowed.values) < 1)
+    stop ("Enums may not be empty. 'allowed.values' must contain at least one element." )
+  
+  if (length(allowed.values) != length(value.names))
+    stop(paste0("'allowed.values' [", length(allowed.values), "] and 'value.names' [", length(value.names), "] must be the same length"))
+  
+  unique.values <- unique(allowed.values)
+  
+  if (length(allowed.values) != length(unique.values))
+    stop("'allowed.values' must contain unique elements, but duplicates were found.")
   
   
-  myEnum <- as.list(inputList)
-  enumNames <- names(myEnum)
-  if (is.null(enumNames)) {
-    names(myEnum) <- myEnum
-  } else if ("" %in% enumNames) {
-    stop("The inputList has some but not all names assigned. They must be all assigned or none assigned")
-  }
-  return(myEnum)
+  
+  new.enum <- as.list(allowed.values)
+  names(new.enum) <- value.names
+  
+  
+  
+  return(new.enum)
 }
-
-
-
-
-
-
-
-
-
