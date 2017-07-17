@@ -24,34 +24,71 @@
 
 
 
-#' Create an enumeration
+# TODO: Create an enum by just providing the constant names (the values are integers then starting by 1 or any start value)
+
+
+
+#' Create an enumeration (an enumeration is a list of constants)
 #'
-#' @param allowed.values 
-#' @param value.names 
+#' This helper function builds an enum type using the provided arguments. It is mainly useful
+#' to load the elements of an enum from a data base or config file (e. g. CSV file) and create an enum type.
 #'
-#' @return
+#' @param allowed.values    Vector with all allowed values
+#' @param value.names       Vector of character containing the names that correspond to the allowed values
+#'                          Duplicated names will be made unique.
+#'                          Invalid characters are replaced by characters that are allowed in names in R
+#'
+#' @return                  A list that represents an enumeration via named elements
 #' @export
 #'
-#' @examples
+#' @examples                
+#' COLOR.ENUM <- create.enum(c(1L, 2L, 3L), c("BLUE", "RED", "BLACK"))
+#' # Returns an enumeration type that also could have been constructed manually like this:
+#' COLOR.ENUM <- list(BLUE = 1L, RED = 2L, BLACK = 3L)
 create.enum <- function(allowed.values,
-                        value.names = make.names(allowed.values, unique = TRUE)) {
+                        value.names  = make.names(allowed.values, unique = TRUE),
+                        descriptions = value.names) {
   
   if (length(allowed.values) < 1)
-    stop ("Enums may not be empty. 'allowed.values' must contain at least one element." )
+    stop("Enums may not be empty. 'allowed.values' must contain at least one element." )
   
   if (length(allowed.values) != length(value.names))
-    stop(paste0("'allowed.values' [", length(allowed.values), "] and 'value.names' [", length(value.names), "] must be the same length"))
+    stop(paste0("'allowed.values' [", length(allowed.values), "] and 'value.names' [", length(value.names), "] must have the same length"))
   
   unique.values <- unique(allowed.values)
   
   if (length(allowed.values) != length(unique.values))
     stop("'allowed.values' must contain unique elements, but duplicates were found.")
+
+  if (length(descriptions) != length(allowed.values))
+      stop(paste0("'descriptions' [", length(descriptions), "] and 'allowed.values' [", length(allowed.values), "] must have the same length"))
+  
+  # TODO More validations like:
+  
+  # if (length(inputList) < 1)
+  #   stop ("Enums may not be empty." )
+  # inputList.upper <- toupper(as.character(inputList))
+  # uniqueEnums <- unique(inputList.upper)
+  # if ( ! identical( inputList.upper, uniqueEnums ))
+  #   stop ("Enums must be unique (ignoring case)." )
+  # validNames <- make.names(inputList.upper)   # Make syntactically valid names out of character vectors.
+  # if ( ! identical( inputList.upper, validNames ))
+  #   stop( "Enums must be valid R identifiers." )
+
+  # if (is.null(enumNames)) {
+  #   names(myEnum) <- myEnum
+  # } else if ("" %in% enumNames) {
+  #   stop("The inputList has some but not all names assigned. They must be all assigned or none assigned")
+  # }  
   
   
   
   new.enum <- as.list(allowed.values)
   names(new.enum) <- value.names
   
+  
+  
+  attr(new.enum, "descriptions") <- descriptions
   
   
   return(new.enum)

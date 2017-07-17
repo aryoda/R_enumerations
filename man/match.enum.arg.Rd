@@ -7,10 +7,43 @@
 match.enum.arg(arg, choices)
 }
 \arguments{
-\item{arg}{}
+\item{arg}{The actual function parameter that shall be validated against the allowed enum values}
 
-\item{choices}{}
+\item{choices}{The list of allowed enum values}
+}
+\value{
+Returns the passed actual parameter if is a valid enum value.
+               If no actual parameter was passed it returns the first element of the enum.
 }
 \description{
-Based on the R code of the base function "match.arg"...
+Call this function at the beginning of your own function that uses an enum parameter
+to validate the passed enum value against the list of allowed enum values.
+}
+\details{
+You can pass an enum value name or the value itself.
+
+If no enum value is passed (missing parameter value) the first item of the enum is used as default value.
+
+Based on the R code of the base function \code{\link{match.arg}}.
+
+Inspired by \url{https://stackoverflow.com/questions/33838392/enum-like-arguments-in-r}
+}
+\examples{
+ColorEnum <- list(BLUE = 1L, RED = 2L, BLACK = 3L)
+
+print_color_code = function(enum = ColorEnum) { 
+  i <- match.enum.arg(enum)
+  print(i)
+  invisible(i)
+}
+
+print_color_code(ColorEnum$RED) # use a value from the enum (with auto completion support)
+# [1] 2
+print_color_code()              # takes the first color of the ColorEnum
+# [1] 1
+print_color_code(3)             # an integer enum value (dirty, just for demonstration)
+# [1] 3
+print_color_code(4)             # an invalid number
+# Error in match.enum.arg(enum) : 
+#  'arg' must be one of the values in the 'choices' list: 1, 2, 3 
 }

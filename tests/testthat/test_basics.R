@@ -43,7 +43,7 @@ test_that("create.enum works", {
   new.enum1 <- create.enum(1:5, LETTERS[1:5])
   expected.enum1 <- list(A = 1, B = 2, C = 3, D = 4, E = 5)
 
-  expect_equal(new.enum1, expected.enum1)
+  expect_equal(new.enum1, expected.enum1, check.attributes = FALSE)
   
   
   
@@ -51,32 +51,57 @@ test_that("create.enum works", {
   new.enum2 <- create.enum(values, LETTERS[1:4])
   exp.enum2 <- list(A = "aaa", B = "b_b", C = "c c", D = "d.d")
 
-  expect_equal(new.enum2, exp.enum2)
+  expect_equal(new.enum2, exp.enum2, check.attributes = FALSE)
   
   
   
   new.enum3 <- create.enum(values)
   exp.enum3 <- list(aaa = "aaa", b_b = "b_b", c.c = "c c", d.d = "d.d")
-  expect_equal(new.enum3, exp.enum3)
+  expect_equal(new.enum3, exp.enum3, check.attributes = FALSE)
   
   
   
   new.enum4 <- create.enum(c("a a", "a.a"))
   exp.enum4 <- list( a.a.1 = "a a", a.a = "a.a")
-  expect_equal(new.enum4, exp.enum4)
+  expect_equal(new.enum4, exp.enum4, check.attributes = FALSE)
   
+  # Attributes must be different
+  # expect_unequal: https://stackoverflow.com/questions/12111863/expect-not-equal-in-pkgtestthat
+  expect_false(isTRUE(all.equal(new.enum4, exp.enum4, check.attributes = TRUE)))
+
 })
 
 
 
-test_that("create.enums recognizes wrong parameter values", {
+test_that("create.enum recognizes wrong parameter values", {
 
   expect_error(create.enum(integer(0), c("a", "b")), "Enums may not be empty.", fixed = TRUE)
   expect_error(create.enum(c(1,1,2)), "'allowed.values' must contain unique elements", fixed = TRUE)
-  expect_error(create.enum(1:3, c("aaa", "bbb")), "'allowed.values' [3] and 'value.names' [2] must be the same length", fixed = TRUE)
+  expect_error(create.enum(1:3, c("aaa", "bbb")), "'allowed.values' [3] and 'value.names' [2] must have the same length", fixed = TRUE)
   
 })
 
+
+
+test_that("create.enum stores descriptions", {
+  
+  new.enum <- create.enum(1:3, c("hello", "new", "world"), c("greeting", "not old", "everyone"))
+  expect_equal(attr(new.enum, "descriptions"), c("greeting", "not old", "everyone"))
+})
+
+
+
+test_that("enum.as.data.frame works", {
+  
+  new.enum <- create.enum(1:3, c("hello", "new", "world"), c("greeting", "not old", "everyone"))
+  expected <- data.frame(allowed.values = 1:3,
+                         value.names    = c("hello", "new", "world"),
+                         descriptions   = c("greeting", "not old", "everyone"),
+                         stringsAsFactors = FALSE)
+  
+  expect_equal(enum.as.data.frame(new.enum), expected)
+    
+})
 
 
 

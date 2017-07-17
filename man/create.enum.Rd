@@ -2,16 +2,28 @@
 % Please edit documentation in R/create_enum.R
 \name{create.enum}
 \alias{create.enum}
-\title{Create an enumeration}
+\title{Create an enumeration (an enumeration is a list of constants)}
 \usage{
 create.enum(allowed.values, value.names = make.names(allowed.values, unique =
-  TRUE))
+  TRUE), descriptions = value.names)
 }
 \arguments{
-\item{allowed.values}{}
+\item{allowed.values}{Vector with all allowed values}
 
-\item{value.names}{}
+\item{value.names}{Vector of character containing the names that correspond to the allowed values
+Duplicated names will be made unique.
+Invalid characters are replaced by characters that are allowed in names in R}
+}
+\value{
+A list that represents an enumeration via named elements
 }
 \description{
-Create an enumeration
+This helper function builds an enum type using the provided arguments. It is mainly useful
+to load the elements of an enum from a data base or config file (e. g. CSV file) and create an enum type.
+}
+\examples{
+               
+COLOR.ENUM <- create.enum(c(1L, 2L, 3L), c("BLUE", "RED", "BLACK"))
+# Returns an enumeration type that also could have been constructed manually like this:
+COLOR.ENUM <- list(BLUE = 1L, RED = 2L, BLACK = 3L)
 }
