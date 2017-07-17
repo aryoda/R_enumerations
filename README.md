@@ -33,9 +33,11 @@ Enumerated types
 
 To install the package using the source code at github you can use the package *devtools*:
 
+```R
 # install.packages("devtools")
 library(devtools)
 install_github("aryoda/R_enumerations")
+```
 
 
 
