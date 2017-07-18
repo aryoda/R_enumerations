@@ -40,7 +40,22 @@ install_github("aryoda/R_enumerations")
 ```
 
 
-
 ## Usage
 
 TODO
+
+
+
+## Import into your own packages
+
+If you want to use this package in your own packages you have to declare the dependencies in the
+`DESCRIPTION` file and add a remote dependency to the github location:
+
+```
+Imports: ...,
+         enumerations
+
+Remotes: aryoda/R_enumerations
+```
+
+For details see: https://stackoverflow.com/questions/30493388/create-an-r-package-that-depends-on-another-r-package-located-on-github
