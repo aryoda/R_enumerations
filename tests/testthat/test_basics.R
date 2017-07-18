@@ -102,7 +102,7 @@ test_that("enum as.data.frame works", {
   expect_equal(as.data.frame(new.enum), expected)
   
   
-  expect_error(as.data.frame.enumeration(1), "%in% class(enum)) is not TRUE", fixed = TRUE)
+  expect_error(as.data.frame.enumeration(1), "is.enumeration(enum) is not TRUE", fixed = TRUE)
   
 })
 
@@ -130,6 +130,14 @@ test_that("invalid enum value names are cleaned-up", {
   
 })
 
+
+
+test_that("is.enumeration works", {
+  
+  expect_false(is.enumeration(1.10))
+  expect_true(is.enumeration(create.enum(1:10)))
+
+})
 
 
 # OPEN TEST CASES -------------------------------------------------------------------------------------------------
@@ -166,4 +174,5 @@ EnumTest = function(enum = c("BLUE", "RED", "BLACK")) {
          # do something
   )
 }
+
 

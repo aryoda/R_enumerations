@@ -2,4 +2,5 @@
 
 S3method(as.data.frame,enumeration)
 export(create.enum)
+export(is.enumeration)
 export(match.enum.arg)

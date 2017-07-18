@@ -13,7 +13,7 @@
 #' @examples
 as.data.frame.enumeration <- function(enum) {
 
-  stopifnot(any(c("enumeration", "list") %in% class(enum)))
+  stopifnot(is.enumeration(enum))
   
   descriptions <- attr(enum, "descriptions", exact = TRUE)
   
