@@ -91,7 +91,7 @@ test_that("create.enum stores descriptions", {
 
 
 
-test_that("enum.as.data.frame works", {
+test_that("enum as.data.frame works", {
   
   new.enum <- create.enum(1:3, c("hello", "new", "world"), c("greeting", "not old", "everyone"))
   expected <- data.frame(allowed.values = 1:3,
@@ -99,8 +99,35 @@ test_that("enum.as.data.frame works", {
                          descriptions   = c("greeting", "not old", "everyone"),
                          stringsAsFactors = FALSE)
   
-  expect_equal(enum.as.data.frame(new.enum), expected)
-    
+  expect_equal(as.data.frame(new.enum), expected)
+  
+  
+  expect_error(as.data.frame.enumeration(1), "%in% class(enum)) is not TRUE", fixed = TRUE)
+  
+})
+
+
+
+test_that("invalid enum value names do work as-is", {
+  
+  new.enum <- create.enum(1:3, c("hi 1", "222", "a$3*2"), ensure.valid.value.names = FALSE)
+  
+  expect_equal(new.enum$`hi 1`, 1)
+  expect_equal(new.enum$`222`, 2)
+  expect_equal(new.enum$`a$3*2`, 3)
+  
+})
+
+
+
+test_that("invalid enum value names are cleaned-up", {
+  
+  new.enum <- create.enum(1:3, c("hi 1", "222", "a$3*2"))  # ensure.valid.value.names = TRUE is default!
+  
+  expect_equal(new.enum$hi.1, 1)
+  expect_equal(new.enum$X222, 2)
+  expect_equal(new.enum$a.3.2, 3)
+  
 })
 
 

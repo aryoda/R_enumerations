@@ -37,8 +37,13 @@
 #' @param value.names       Vector of character containing the names that correspond to the allowed values
 #'                          Duplicated names will be made unique.
 #'                          Invalid characters are replaced by characters that are allowed in names in R
+#' @param descriptions      Vector with more detailled descriptive information for each enum value
+#' @param ensure.valid.value.names TRUE to convert invalid characters into syntacically allowed names
+#'                                      and make duplicated names unique (by appending a number).
+#'                                 FALSE leaves value names like they are. To use enum names that contain invalid
+#'                                       characters you have to quote them, e. g. \code{my.enum$`a special name`}
 #'
-#' @return                  A list that represents an enumeration via named elements
+#' @return                  An object of class "enumeration" that represents an enumeration via a list with named elements
 #' @export
 #'
 #' @examples                
@@ -46,8 +51,9 @@
 #' # Returns an enumeration type that also could have been constructed manually like this:
 #' COLOR.ENUM <- list(BLUE = 1L, RED = 2L, BLACK = 3L)
 create.enum <- function(allowed.values,
-                        value.names  = make.names(allowed.values, unique = TRUE),
-                        descriptions = value.names) {
+                        value.names  = allowed.values,
+                        descriptions = value.names,
+                        ensure.valid.value.names = TRUE) {
   
   if (length(allowed.values) < 1)
     stop("Enums may not be empty. 'allowed.values' must contain at least one element." )
@@ -83,12 +89,24 @@ create.enum <- function(allowed.values,
   
   
   
+  # clean-up the valid names?
+  if (ensure.valid.value.names) {
+    value.names <- make.names(value.names, unique = TRUE)
+  }
+  
+  
+  
   new.enum <- as.list(allowed.values)
   names(new.enum) <- value.names
   
   
   
   attr(new.enum, "descriptions") <- descriptions
+  
+  
+  
+  class(new.enum) <- append("enumeration", class(new.enum))
+  
   
   
   return(new.enum)

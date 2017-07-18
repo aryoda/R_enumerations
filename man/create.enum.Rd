@@ -4,8 +4,8 @@
 \alias{create.enum}
 \title{Create an enumeration (an enumeration is a list of constants)}
 \usage{
-create.enum(allowed.values, value.names = make.names(allowed.values, unique =
-  TRUE), descriptions = value.names)
+create.enum(allowed.values, value.names = allowed.values,
+  descriptions = value.names, ensure.valid.value.names = TRUE)
 }
 \arguments{
 \item{allowed.values}{Vector with all allowed values}
@@ -13,9 +13,16 @@ create.enum(allowed.values, value.names = make.names(allowed.values, unique =
 \item{value.names}{Vector of character containing the names that correspond to the allowed values
 Duplicated names will be made unique.
 Invalid characters are replaced by characters that are allowed in names in R}
+
+\item{descriptions}{Vector with more detailled descriptive information for each enum value}
+
+\item{ensure.valid.value.names}{TRUE to convert invalid characters into syntacically allowed names
+     and make duplicated names unique (by appending a number).
+FALSE leaves value names like they are. To use enum names that contain invalid
+      characters you have to quote them, e. g. \code{my.enum$`a special name`}}
 }
 \value{
-A list that represents an enumeration via named elements
+An object of class "enumeration" that represents an enumeration via a list with named elements
 }
 \description{
 This helper function builds an enum type using the provided arguments. It is mainly useful
