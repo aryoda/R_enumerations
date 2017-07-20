@@ -26,7 +26,7 @@ Enumerated types
    (if the formal parameter is an enumerated type)
 3. **make coding easier** if the IDE supports code completion (e. g. RStudio)
    by presenting the list of allowed names
-   
+
 
 
 ## Installation
@@ -40,9 +40,36 @@ install_github("aryoda/R_enumerations")
 ```
 
 
-## Usage
+## Examples
 
-TODO
+```R
+library(enumerations)
+
+# "magic numbers" vs. a self-explanatory enumeration --------------------------------------------------------------
+
+data <- data.frame(gender = c(1, 2, 1, 3, 4, 2), age = c(50, 40, 10, 10, 18, 25))
+
+GENDER <- create.enum(1:3, c("MALE", "FEMALE", "UNKNOWN"))
+
+
+# Example with a "magic number":
+mean(data$age[data$gender == 1])
+
+# Same example with an enum:
+mean(data$age[data$gender == GENDER$MALE])
+
+
+
+# check against allowed values to find invalid data----------------------------------------------------------------
+
+data[!(data$gender %in% GENDER),]
+#    gender  age
+# 5       4   18
+```
+
+Using an enum type does also enable code completion in RStudio (and other IDEs):
+
+![Picture: RStudio code completion](inst/pics/RStudio_code_completion.png)
 
 
 
