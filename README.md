@@ -35,12 +35,13 @@ To install the package using the source code at github you can use the package *
 
 ```R
 # install.packages("devtools")
-library(devtools)
-install_github("aryoda/R_enumerations")
+devtools::install_github("aryoda/R_enumerations")
 ```
 
 
 ## Examples
+
+### Magic numbers vs. enumerations
 
 ```R
 library(enumerations)
@@ -52,10 +53,10 @@ data <- data.frame(gender = c(1, 2, 1, 3, 4, 2), age = c(50, 40, 10, 10, 18, 25)
 GENDER <- create.enum(1:3, c("MALE", "FEMALE", "UNKNOWN"))
 
 
-# Example with a "magic number":
+# Example with a "magic number" (what does "1" mean?):
 mean(data$age[data$gender == 1])
 
-# Same example with an enum:
+# Same example with an enum that makes the meaning explicit:
 mean(data$age[data$gender == GENDER$MALE])
 
 
@@ -66,6 +67,54 @@ data[!(data$gender %in% GENDER),]
 #    gender  age
 # 5       4   18
 ```
+
+
+### Enum-alike function arguments
+
+You can use an enumeration as data type of a function parameter
+
+- to document the allowed values of a function parameter and
+- check the passed actual parameter value against the list of allowed values
+- support optional parameters (the first enum value is the default value then)
+
+```R
+library(enumerations)
+
+GENDER <- create.enum(1:3, c("MALE", "FEMALE", "UNKNOWN"))
+
+life.expectancy <- function(x = GENDER) {
+  match.enum.arg(x)
+  if (x == GENDER$MALE)
+    return(78)
+  if (x == GENDER$FEMALE)
+    return(80)
+  return(NA)
+}
+
+life.expectancy()   # uses the first element of the enum as default value!
+# [1] 78
+life.expectancy(GENDER$MALE)
+# [1] 78
+life.expectancy(GENDER$FEMALE)
+# [1] 80
+life.expectancy(GENDER$UNKNOWN)
+# [1] NA
+life.expectancy(1)   # not the recommended way, but also works
+# [1] 78
+life.expectancy(4)   # not the recommended way, but also works
+# Error in match.enum.arg(x) : 
+#  'arg' must be one of the values in the 'choices' list: 1, 2, 3 
+life.expectancy("male")   # not the recommended way, but also works
+# Error in match.enum.arg(x) : 
+#  'arg' must be one of the values in the 'choices' list: 1, 2, 3 
+```
+
+**Note** that currently there is no support for another than the first enum value as the default value
+in case of missing actual parameter.
+
+
+
+### Code completion ("intellisense")
 
 Using an enum type does also enable code completion in RStudio (and other IDEs):
 

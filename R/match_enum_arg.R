@@ -61,7 +61,28 @@
 #' # [1] 3
 #' print_color_code(4)             # an invalid number
 #' # Error in match.enum.arg(enum) : 
-#' #  'arg' must be one of the values in the 'choices' list: 1, 2, 3 
+#' #  'arg' must be one of the values in the 'choices' list: 1, 2, 3
+#' 
+#' 
+#' 
+#' PAYMENT_FREQUENCY <- create.enum(c(12, 4, 1), c("MONTHLY", "QUARTERLY", "ANNUALY"))
+#' 
+#' payment.amount <- function(annual.amount, payment.frequency = PAYMENT_FREQUENCY) {
+#'   payments.per.year <- match.enum.arg(payment.frequency)
+#'   return(annual.amount / payments.per.year)
+#' }
+#' 
+#' payment.amount(120, PAYMENT_FREQUENCY$MONTHLY)
+#' # [1] 10
+#' payment.amount(120, PAYMENT_FREQUENCY$QUARTERLY)
+#' # [1] 30
+#' payment.amount(120, 2)
+#' # Error in match.enum.arg(payment.frequency) : 
+#' #  'arg' must be one of the values in the 'choices' list: 12, 4, 1 
+#' 
+#' payment.amount(120)   # uses the first value as default value!
+#' [1] 10
+#' 
 match.enum.arg <- function(arg, choices) {
   
   # Get the formal arguments of "arg" if no choices were passed in
@@ -74,8 +95,10 @@ match.enum.arg <- function(arg, choices) {
     # print(paste("arg:", arg))
   }
   
+  # TODO Support other items than the only the first one as default value (e. g. add a new parameter)
+  # DISADVANTAGE: The default value cannot be recognized in the function signature but only in the documentation!
   if(identical(arg, choices))
-    arg <- choices[[1]]    # choose the first value of the first list item
+    arg <- choices[[1]]    # choose the first value of the first list item as default value
   
   # allowed.values <- sapply(choices, function(item) {item[1]})   # extract the integer values of the enum items
   
