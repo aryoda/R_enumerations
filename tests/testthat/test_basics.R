@@ -1,5 +1,7 @@
 # Basic test of enumerations
 
+# library(testthat)
+
 testthat::context("test_basis.R")
 
 
@@ -33,7 +35,7 @@ test_that("Enum item returns the enum value", {
 
 test_that("Invalid enum values throw an error", {
  
-  expect_error(color.code(0), "'arg' must be one of the values in the 'choices' list: 1, 2, 3", fixed = TRUE)
+  expect_error(color.code(0), "'arg' must be one of the values in the 'choices' list: BLUE = 1, RED = 2, BLACK = 3", fixed = TRUE)
    
 })
 

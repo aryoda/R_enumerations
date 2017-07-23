@@ -97,14 +97,14 @@ match.enum.arg <- function(arg, choices) {
   
   # TODO Support other items than the only the first one as default value (e. g. add a new parameter)
   # DISADVANTAGE: The default value cannot be recognized in the function signature but only in the documentation!
-  if(identical(arg, choices))
+  if (identical(arg, choices))
     arg <- choices[[1]]    # choose the first value of the first list item as default value
   
   # allowed.values <- sapply(choices, function(item) {item[1]})   # extract the integer values of the enum items
   
-  # TODO Show enum values together with the enum labels!
-  if(!is.element(arg, choices))
-    stop(paste("'arg' must be one of the values in the 'choices' list:", paste(choices, collapse = ", ")))
+  if (!is.element(arg, choices))
+    stop(paste("'arg' must be one of the values in the 'choices' list:",
+               paste(names(choices), choices, sep = " = ", collapse = ", ")))
   
   return(arg)
 }
