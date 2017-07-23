@@ -2,9 +2,9 @@
 
 ## Overview
 
-A package that adds a dynamic enumeration data type to the R programming language
+This package adds a dynamic enumeration data type to the R programming language
 
-An enumeration is a data type that consisting of a set of named values.
+An enumeration is a data type that consisting of a set of named values (value/name pairs).
 
 
 
@@ -20,12 +20,11 @@ https://en.wikipedia.org/wiki/Enumerated_type
 
 Enumerated types
 
-1. make the code **more self-documenting** by using self-explanatory names instead of "magic" values
+1. make the code **more self-documenting** by using self-explanatory constant names instead of "magic" values
 2. reduce the risk of passing wrong actual parameter values to functions via **validation against
-   the list of allowed values**
-   (if the formal parameter is an enumerated type)
+   the list of allowed values of the enumeration**
 3. **make coding easier** if the IDE supports code completion (e. g. RStudio)
-   by presenting the list of allowed names
+   by presenting the list of allowed names in the editor
 
 
 
@@ -99,14 +98,16 @@ life.expectancy(GENDER$FEMALE)
 # [1] 80
 life.expectancy(GENDER$UNKNOWN)
 # [1] NA
-life.expectancy(1)   # not the recommended way, but also works
+life.expectancy(1)   # passing the value is not the recommended way, but also works
 # [1] 78
-life.expectancy(4)   # not the recommended way, but also works
+life.expectancy(4)   # passing the value is not the recommended way... because you may use invalid values
 # Error in match.enum.arg(x) : 
-#  'arg' must be one of the values in the 'choices' list: 1, 2, 3 
-life.expectancy("male")   # not the recommended way, but also works
+#    'arg' must be one of the values in the 'choices' list: MALE = 1, FEMALE = 2, UNKNOWN = 3 
+life.expectancy("male")   # names as strings do not work
 # Error in match.enum.arg(x) : 
-#  'arg' must be one of the values in the 'choices' list: 1, 2, 3 
+#    'arg' must be one of the values in the 'choices' list: MALE = 1, FEMALE = 2, UNKNOWN = 3 
+life.expectancy(GENDER[["MALE"]])    # names as strings must use the usual double-bracket syntax
+# [1] 78
 ```
 
 **Note** that currently there is no support for another than the first enum value as the default value
