@@ -35,7 +35,9 @@
 #' Setting the enum names via the \code{value.names} parameter is mainly useful to load the elements
 #' of an enum from a data base or config file (e. g. CSV file) to create an enum type.
 #'
-#' Since the returned enumeration object is also a \code{\link{list}} you can also use it like a list.
+#' Since the returned enumeration object is also a \code{\link{list}} you can also use it like a list,
+#' e. g. accessing single enum values by using the $ operator (\code{ENUM$VALUE_NAME}).
+#' This is the reason for a \code{\link{list}} instead of an atomic vector as internal representation.
 #'
 #' @param allowed.values    Vector with all allowed values
 #'                          and (optionally) the enum names as names of the vector elements.

@@ -122,15 +122,18 @@ life.expectancy(1)   # passing the value is not the recommended way, but also wo
 life.expectancy(4)   # passing the value is not the recommended way... because you may use invalid values
 # Error in match.enum.arg(x) : 
 #    'arg' must be one of the values in the 'choices' list: MALE = 1, FEMALE = 2, UNKNOWN = 3 
-life.expectancy("male")   # names as strings do not work
+life.expectancy("male")   # names as strings do not work directly
 # Error in match.enum.arg(x) : 
 #    'arg' must be one of the values in the 'choices' list: MALE = 1, FEMALE = 2, UNKNOWN = 3 
 life.expectancy(GENDER[["MALE"]])    # names as strings must use the usual double-bracket syntax
 # [1] 78
+gender <- "MALE"
+life.expectancy(GENDER[[gender]])    # a string in a variable must also use the double-brackets
+# [1] 78
 ```
 
 **Note** that currently there is no support for another than the first enum value as the default value
-in case of missing actual parameter.
+in case of a missing actual parameter.
 
 
 
