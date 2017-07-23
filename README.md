@@ -40,9 +40,11 @@ devtools::install_github("aryoda/R_enumerations")
 
 ## Examples
 
-There are different ways of creating an enumeration:
+There are different ways of creating an enumeration object:
 
 ```R
+library(enumerations)
+
 # This is the easiest way to create an enumeration (if the enum values are not important)
 DRINKS <- create.enum(c("COFFEE", "TEA", "SOFT DRINK"))
 
