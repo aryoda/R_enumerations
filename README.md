@@ -40,6 +40,21 @@ devtools::install_github("aryoda/R_enumerations")
 
 ## Examples
 
+Different ways of creating an enumeration:
+
+```R
+# This is the easiest way to create an enumeration (if the enum values are not important)
+DRINKS <- create.enum(c("COFFEE", "TEA", "SOFT DRINK"))
+
+# This is the most intuitive way of creating an enumeration
+COLOR.ENUM <- create.enum(c(BLUE = 1L, RED = 2L, BLACK = 3L))
+
+# Specify the values and names separately (e. g. if they are stored in a CSV file or database table)
+COLOR.ENUM <- create.enum(c(1L, 2L, 3L), c("BLUE", "RED", "BLACK"))
+```
+
+
+
 ### Magic numbers vs. enumerations
 
 ```R

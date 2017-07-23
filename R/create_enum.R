@@ -54,7 +54,7 @@
 #' @export
 #'
 #' @examples                
-#' # This is the easiest way to create an enumertion if the enum values are not important
+#' # This is the easiest way to create an enumeration if the enum values are not important
 #' DRINKS <- create.enum(c("COFFEE", "TEA", "SOFT DRINK"))
 #'
 #' # This is the most intuitive way of creating an enumeration
