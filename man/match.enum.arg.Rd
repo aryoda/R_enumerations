@@ -43,10 +43,11 @@ print_color_code()              # takes the first color of the ColorEnum
 # [1] 1
 print_color_code(3)             # an integer enum value (dirty, just for demonstration)
 # [1] 3
+\dontrun{
 print_color_code(4)             # an invalid number
 # Error in match.enum.arg(enum) : 
-#  'arg' must be one of the values in the 'choices' list: 1, 2, 3
-
+#  'arg' must be one of the values in the 'choices' list: BLUE = 1, RED = 2, BLACK = 3
+}
 
 
 PAYMENT_FREQUENCY <- create.enum(c(12, 4, 1), c("MONTHLY", "QUARTERLY", "ANNUALY"))
@@ -60,11 +61,13 @@ payment.amount(120, PAYMENT_FREQUENCY$MONTHLY)
 # [1] 10
 payment.amount(120, PAYMENT_FREQUENCY$QUARTERLY)
 # [1] 30
+\dontrun{
 payment.amount(120, 2)
 # Error in match.enum.arg(payment.frequency) : 
-#  'arg' must be one of the values in the 'choices' list: 12, 4, 1 
+#  'arg' must be one of the values in the 'choices' list: MONTHLY = 12, QUARTERLY = 4, ANNUALY = 1 
+}
 
 payment.amount(120)   # uses the first value as default value!
-[1] 10
+# [1] 10
 
 }

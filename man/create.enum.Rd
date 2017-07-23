@@ -4,15 +4,19 @@
 \alias{create.enum}
 \title{Create an enumeration (an enumeration is a list of constants)}
 \usage{
-create.enum(allowed.values, value.names = allowed.values,
-  descriptions = value.names, ensure.valid.value.names = TRUE)
+create.enum(allowed.values, value.names = if (is.null(names(allowed.values)))
+  allowed.values else names(allowed.values), descriptions = value.names,
+  ensure.valid.value.names = TRUE)
 }
 \arguments{
-\item{allowed.values}{Vector with all allowed values}
+\item{allowed.values}{Vector with all allowed values
+and (optionally) the enum names as names of the vector elements.}
 
-\item{value.names}{Vector of character containing the names that correspond to the allowed values
-Duplicated names will be made unique.
-Invalid characters are replaced by characters that are allowed in names in R}
+\item{value.names}{Vector of character strings containing the names that correspond to the allowed values
+If the names are neither provided in the allowed values nor in the parameter `value.names`
+the enum values are taken as names.
+Duplicated names will be made unique only if the parameter \code{ensure.valid.value.names}
+is set to \code{TRUE}.}
 
 \item{descriptions}{Vector with more detailled descriptive information for each enum value}
 
@@ -25,12 +29,25 @@ FALSE leaves value names like they are. To use enum names that contain invalid
 An object of class "enumeration" that represents an enumeration via a list with named elements
 }
 \description{
-This helper function builds an enum type using the provided arguments. It is mainly useful
-to load the elements of an enum from a data base or config file (e. g. CSV file) and create an enum type.
+This helper function builds an enum type using the provided arguments.
+}
+\details{
+Setting the enum names via the \code{value.names} parameter is mainly useful to load the elements
+of an enum from a data base or config file (e. g. CSV file) to create an enum type.
+
+Since the returned enumeration object is also a \code{\link{list}} you can also use it like a list.
 }
 \examples{
                
+# This is the easiest way to create an enumertion if the enum values are not important
+DRINKS <- create.enum(c("COFFEE", "TEA", "SOFT DRINK"))
+
+# This is the most intuitive way of creating an enumeration
+COLOR.ENUM <- create.enum(c(BLUE = 1L, RED = 2L, BLACK = 3L))
+
 COLOR.ENUM <- create.enum(c(1L, 2L, 3L), c("BLUE", "RED", "BLACK"))
-# Returns an enumeration type that also could have been constructed manually like this:
-COLOR.ENUM <- list(BLUE = 1L, RED = 2L, BLACK = 3L)
+# returns an enumeration type that internally is constructed similar to this:
+# COLOR.ENUM <- list(BLUE = 1L, RED = 2L, BLACK = 3L)
+
+
 }

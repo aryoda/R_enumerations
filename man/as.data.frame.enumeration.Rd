@@ -4,17 +4,29 @@
 \alias{as.data.frame.enumeration}
 \title{Creates a data.frame with all elements of an enum}
 \usage{
-\method{as.data.frame}{enumeration}(enum)
+\method{as.data.frame}{enumeration}(x, row.names = NULL, optional = FALSE,
+  ...)
 }
 \arguments{
-\item{enum}{An object of class "enumeration" (created with \code{\link{create.enum}})}
+\item{x}{An object of class "enumeration" (created with \code{\link{create.enum}})}
+
+\item{row.names}{Currently not used (but required for a compatible S3 interface)}
+
+\item{optional}{Currently not used (but required for a compatible S3 interface)}
+
+\item{...}{Currently not used (but required for a compatible S3 interface)}
 }
 \value{
 A data.frame with three columns: allowed.values, value.names and descriptions.
               The 'descriptions' column is set to the names attribute of the enum if no 'descriptions'
-              attribute exists.
+              attribute exists. Character strings are never converted to factors (\code{stringsAsFactors = FALSE}).
 }
 \description{
 The data.frame is useful for debugging purposes, filling list and combo boxes in user interfaces to
 select one value etc.
+}
+\examples{
+DRINKS <- create.enum(c(COFFEE = 1, TEA = 2, SOFT_DRINK = 3),
+                      descriptions = c("hot", "hotter", "cold"))
+as.data.frame(DRINKS)
 }
