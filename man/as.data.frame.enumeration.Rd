@@ -10,7 +10,8 @@
 \arguments{
 \item{x}{An object of class "enumeration" (created with \code{\link{create.enum}})}
 
-\item{row.names}{Currently not used (but required for a compatible S3 interface)}
+\item{row.names}{\code{NULL} or a character vector giving the row
+    names for the data frame.  Missing values are not allowed.}
 
 \item{optional}{Currently not used (but required for a compatible S3 interface)}
 

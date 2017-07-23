@@ -77,7 +77,7 @@ mean(data$age[data$gender == GENDER$MALE])
 
 
 
-# check against allowed values to find invalid data----------------------------------------------------------------
+# check against allowed values to find invalid data ---------------------------------------------------------------
 
 data[!(data$gender %in% GENDER),]
 #    gender  age

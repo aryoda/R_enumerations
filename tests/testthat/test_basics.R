@@ -105,6 +105,20 @@ test_that("create.enum recognizes wrong parameter values", {
 
 
 
+test_that("create.enum handles NA", {
+  
+  e1 <- create.enum(c(a = 1, b = 2, c = NA))
+  expect_true(is.na(e1$c), info = "NA value must be allowed")
+
+  e2 <- create.enum(NA)
+  expect_equal(length(e2), 1)
+  expect_equal(e2$NA., NA)
+  expect_true(is.na(e2[[1]]))
+
+})
+
+
+
 test_that("create.enum stores descriptions", {
   
   new.enum <- create.enum(1:3, c("hello", "new", "world"), c("greeting", "not old", "everyone"))
@@ -122,7 +136,9 @@ test_that("enum as.data.frame works", {
                          descriptions   = c("greeting", "not old", "everyone"),
                          stringsAsFactors = FALSE)
   
-  expect_equal(as.data.frame(new.enum), expected)
+  result <- as.data.frame(new.enum)
+  
+  expect_equal(result, expected)
   
   
   expect_error(as.data.frame.enumeration(1), "is.enumeration(x) is not TRUE", fixed = TRUE)

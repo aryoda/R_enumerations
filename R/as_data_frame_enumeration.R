@@ -3,8 +3,8 @@
 #' The data.frame is useful for debugging purposes, filling list and combo boxes in user interfaces to
 #' select one value etc.
 #'
+#' @inheritParams base::as.data.frame
 #' @param x         An object of class "enumeration" (created with \code{\link{create.enum}})
-#' @param row.names Currently not used (but required for a compatible S3 interface)
 #' @param optional  Currently not used (but required for a compatible S3 interface)
 #' @param ...       Currently not used (but required for a compatible S3 interface)
 #'
@@ -19,17 +19,35 @@
 #' as.data.frame(DRINKS)
 as.data.frame.enumeration <- function(x, row.names = NULL, optional = FALSE, ...) {
 
+  # print(paste("Called from:", sys.calls()))
+  
   stopifnot(is.enumeration(x))
 
-  # TODO Parameters "row.names" and "optional" are ignored currently!
+  # TODO Parameter "optional" is ignored currently!
     
   descriptions <- attr(x, "descriptions", exact = TRUE)
   
   if (is.null(descriptions)) descriptions <- names(x)
   
-  result <- data.frame(allowed.values = unlist(x, use.names = FALSE),
+  if (is.null(row.names))
+    row.names <- 1L:length(x)
+  
+  # Important: To avoid an endless recursion the class must be removed from x
+  #            before creating the data.frame.
+  #            "unlist", "unclass" and "as.vector" are possible candidates for that.
+  # Sympthoms were: # Error: C stack usage  7969328 is too close to the limit
+  # Diagnosed with: Logging the as.data.frame.enumeration calls with sys.calls()
+  # Code to reproduce:
+  #   library(enumerations)
+  #   x <- c(hello = 1, new = 2, world = 3)
+  #   class(x) <- append("enumeration", class(x))
+  #   result <- data.frame(col1 = x)
+  #   # Error: C stack usage  7969328 is too close to the limit
+  
+  result <- data.frame(allowed.values = as.vector(unlist(x, use.names = FALSE)),
                        value.names = names(x),
                        descriptions = descriptions,
+                       row.names = row.names,
                        stringsAsFactors = FALSE)
   
   return(result)

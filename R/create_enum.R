@@ -92,8 +92,6 @@ create.enum <- function(allowed.values,
   
   # TODO More validations like:
   
-  # if (length(inputList) < 1)
-  #   stop ("Enums may not be empty." )
   # inputList.upper <- toupper(as.character(inputList))
   # uniqueEnums <- unique(inputList.upper)
   # if ( ! identical( inputList.upper, uniqueEnums ))
