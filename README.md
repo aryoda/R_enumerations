@@ -4,7 +4,9 @@
 
 This package adds a dynamic enumeration data type to the R programming language
 
-An enumeration is a data type that consisting of a set of named values (value/name pairs).
+An enumeration is a data type that consists of a set of named values (value/name pairs)
+to restrict the allowed values and support using self-explanatory names instead
+of magic values in the code.
 
 
 
