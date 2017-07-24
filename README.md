@@ -8,6 +8,9 @@ An enumeration is a data type that consists of a set of named values (value/name
 to restrict the allowed values and support using self-explanatory names instead
 of magic values in the code.
 
+"Dynamic" means the enumeration values cannot only be declared at "compile" (design) time
+but also during run-time.
+
 
 
 ## Background
