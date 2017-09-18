@@ -160,4 +160,7 @@ Imports: ...,
 Remotes: aryoda/R_enumerations
 ```
 
+Note that the remote dependency does not cause the automatic installation of the referenced package.
+You still have to [install it manually](#installation) beforehand.
+
 For details see: https://stackoverflow.com/questions/30493388/create-an-r-package-that-depends-on-another-r-package-located-on-github
