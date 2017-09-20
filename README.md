@@ -104,11 +104,14 @@ library(enumerations)
 GENDER <- create.enum(1:3, c("MALE", "FEMALE", "UNKNOWN"))
 
 life.expectancy <- function(x = GENDER) {
-  match.enum.arg(x)
-  if (x == GENDER$MALE)
+
+  x.value <- match.enum.arg(x)  # validate against allowed values and pass the default value if no value was passed
+  
+  if (x.value == GENDER$MALE)
     return(78)
-  if (x == GENDER$FEMALE)
+  if (x.value == GENDER$FEMALE)
     return(80)
+    
   return(NA)
 }
 
@@ -148,7 +151,9 @@ Using an enum type does also enable code completion in RStudio (and other IDEs):
 
 
 
-## Import into your own packages
+## Use enumerations in your own packages
+
+### Import into your own packages
 
 If you want to use this package in your own packages you have to declare the dependencies in the
 `DESCRIPTION` file and add a remote dependency to the github location:
@@ -164,3 +169,12 @@ Note that the remote dependency does not cause the automatic installation of the
 You still have to [install it manually](#installation) beforehand.
 
 For details see: https://stackoverflow.com/questions/30493388/create-an-r-package-that-depends-on-another-r-package-located-on-github
+
+
+
+### Best practices to use enumerations in your own package
+
+TODO
+
+* public enum via roxygen2/namespace export + Documentation
+* FQN in function signatures
