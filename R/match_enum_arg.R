@@ -38,7 +38,10 @@
 #' Inspired by \url{https://stackoverflow.com/questions/33838392/enum-like-arguments-in-r}
 #'
 #' @param arg     The actual function parameter that shall be validated against the allowed enum values
-#' @param choices The list of allowed enum values
+#' @param choices Optional: The list of allowed enum values. You can omit this parameter if the formal
+#'                parameter is declared via \code{name = EnumVariableName}. If you provide the enum variable name
+#'                via an expression you have to specify this parameter to avoid errors when checking
+#'                for the allowed values.
 #'
 #' @return        Returns the passed actual parameter if is a valid enum value.
 #'                If no actual parameter was passed it returns the first element of the enum.
@@ -88,6 +91,8 @@
 #' 
 match.enum.arg <- function(arg, choices) {
   
+  # print(paste("arg = ", arg))
+  
   # Get the formal arguments of "arg" if no choices were passed in
   if (missing(choices)) {
     formal.args <- formals(sys.function(sys.parent()))
@@ -97,12 +102,20 @@ match.enum.arg <- function(arg, choices) {
     # print(paste("choices:", choices))
     # print(paste("arg:", arg))
   }
+
+  
   
   # TODO Support other items than the only the first one as default value (e. g. add a new parameter)
   # DISADVANTAGE: The default value cannot be recognized in the function signature but only in the documentation!
   if (identical(arg, choices))
     arg <- choices[[1]]    # choose the first value of the first list item as default value
   
+  # print(paste("identical arg/choices? -> ", identical(arg, choices)))
+  # print(paste("arg.after.identical = ", arg))
+
+  
+  
+  # TODO Not required - remove?
   # allowed.values <- sapply(choices, function(item) {item[1]})   # extract the integer values of the enum items
   
   if (!is.element(arg, choices))

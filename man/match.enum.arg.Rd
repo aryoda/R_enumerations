@@ -9,7 +9,10 @@ match.enum.arg(arg, choices)
 \arguments{
 \item{arg}{The actual function parameter that shall be validated against the allowed enum values}
 
-\item{choices}{The list of allowed enum values}
+\item{choices}{Optional: The list of allowed enum values. You can omit this parameter if the formal
+parameter is declared via \code{name = EnumVariableName}. If you provide the enum variable name
+via an expression you have to specify this parameter to avoid errors when checking
+for the allowed values.}
 }
 \value{
 Returns the passed actual parameter if is a valid enum value.

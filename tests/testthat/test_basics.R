@@ -13,11 +13,11 @@ testthat::context("test_basis.R")
 ColorEnum <<- list(BLUE = 1L, RED = 2L, BLACK = 3L)
 
 # Expects an color enum value as input and returns the color value
-color.code <- function(color = ColorEnum) { 
+color.code <- function(color = ColorEnum) {
+  
   i <- match.enum.arg(color) # , ColorEnum)
-  # i <- match.arg(color)
-  i <- color
-  return(i)
+
+    return(i)
 }
 
 
@@ -30,6 +30,8 @@ test_that("Enum item returns the enum value", {
   expect_equal(color.code(ColorEnum$BLUE),   1L)
   expect_equal(color.code(ColorEnum$RED),    2L)
   expect_equal(color.code(ColorEnum$BLACK),  3L)
+  
+  expect_equal(color.code(), 1L, info = "default value must be the first enum element")
   
 })
 
