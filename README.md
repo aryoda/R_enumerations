@@ -178,3 +178,5 @@ TODO
 
 * public enum via roxygen2/namespace export + Documentation
 * FQN in function signatures
+* always pass second parameter with enum name to `match.enum.arg` to avoid problems if
+  the default value is an expression (e. g. `options`)
