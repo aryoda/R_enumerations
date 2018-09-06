@@ -4,8 +4,9 @@
 \alias{create.enum}
 \title{Create an enumeration (an enumeration is a list of constants)}
 \usage{
-create.enum(allowed.values, value.names = if (is.null(names(allowed.values)))
-  allowed.values else names(allowed.values), descriptions = value.names,
+create.enum(allowed.values, value.names = if
+  (is.null(names(allowed.values))) allowed.values else
+  names(allowed.values), descriptions = value.names,
   ensure.valid.value.names = TRUE)
 }
 \arguments{

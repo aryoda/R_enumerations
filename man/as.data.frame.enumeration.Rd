@@ -4,8 +4,8 @@
 \alias{as.data.frame.enumeration}
 \title{Creates a data.frame with all elements of an enum}
 \usage{
-\method{as.data.frame}{enumeration}(x, row.names = NULL, optional = FALSE,
-  ...)
+\method{as.data.frame}{enumeration}(x, row.names = NULL,
+  optional = FALSE, ...)
 }
 \arguments{
 \item{x}{An object of class "enumeration" (created with \code{\link{create.enum}})}
