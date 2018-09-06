@@ -55,28 +55,6 @@ For details on how to install specific version numbers see: https://cran.r-proje
 
 
 
-## Use `enumerations` in your own package
-
-If you want to use the `enumerations` package in your own package you can add
-a remote location to the `DESCRIPTION` file of your package via the `Remotes` key:
-
-```R
-Remotes: github::aryoda/R_enumerations
-```
-
-You can then use `enumerations` as regular dependency in the `Depends`, `Imports`, `Suggests`
-and `Enhances` keys of the `DESCRIPTION` file.
-
-`Remotes` is an extension known only by the `devtools` package.
-
-This means if you install your package with the `devtools` functions like `install`
-it will download and install `enumerations` automatically if required.
-
-
-**Note: You cannot publish a package at CRAN that contains a `Remotes` key in the `DESCRIPTION` file.**
-
-
-
 ## Examples
 
 There are different ways of creating an enumeration object:
@@ -185,7 +163,7 @@ Using an enum type does also enable code completion in RStudio (and other IDEs):
 
 
 
-## Use enumerations in your own packages
+## Use `enumerations` in your own packages
 
 ### Import into your own packages
 
@@ -196,13 +174,25 @@ If you want to use this package in your own packages you have to declare the dep
 Imports: ...,
          enumerations
 
-Remotes: aryoda/R_enumerations
+Remotes: github::aryoda/R_enumerations
 ```
 
-Note that the remote dependency does not cause the automatic installation of the referenced package.
-You still have to [install it manually](#installation) beforehand.
+You can then use `enumerations` as regular dependency in the `Depends`, `Imports`, `Suggests`
+and `Enhances` keys of the `DESCRIPTION` file.
 
-For details see: https://stackoverflow.com/questions/30493388/create-an-r-package-that-depends-on-another-r-package-located-on-github
+`Remotes` is an extension known only by the `devtools` package.
+
+This means that the remote dependency does not cause the automatic installation of the referenced package
+except your are using the `devtools` functions like `install` for your package.
+
+Otherwise you still have to [install it manually](#installation) before building your package.
+
+For details see:
+
+* https://stackoverflow.com/questions/30493388/create-an-r-package-that-depends-on-another-r-package-located-on-github
+* https://cran.r-project.org/web/packages/devtools/vignettes/dependencies.html
+
+**Note: You cannot publish a package at CRAN that contains a `Remotes` key in the `DESCRIPTION` file.**
 
 
 
@@ -214,3 +204,11 @@ TODO
 * FQN in function signatures
 * always pass second parameter with enum name to `match.enum.arg` to avoid problems if
   the default value is an expression (e. g. `options`)
+
+
+
+
+
+
+
+
