@@ -9,7 +9,7 @@ to restrict the allowed values and support using self-explanatory names instead
 of magic values in the code.
 
 "Dynamic" means the enumeration values cannot only be declared at "compile" (design) time
-but also during run-time.
+but also during run-time (e. g. from a database).
 
 
 
@@ -50,6 +50,30 @@ devtools::install_github("aryoda/R_enumerations@v0.3.0-beta")`
 ```
 
 For a list of available (pre-)releases see https://github.com/aryoda/R_enumerations/releases
+
+For details on how to install specific version numbers see: https://cran.r-project.org/web/packages/devtools/vignettes/dependencies.html
+
+
+
+## Use `enumerations` in your own package
+
+If you want to use the `enumerations` package in your own package you can add
+a remote location to the `DESCRIPTION` file of your package via the `Remotes` key:
+
+```R
+Remotes: github::aryoda/R_enumerations
+```
+
+You can then use `enumerations` as regular dependency in the `Depends`, `Imports`, `Suggests`
+and `Enhances` keys of the `DESCRIPTION` file.
+
+`Remotes` is an extension known only by the `devtools` package.
+
+This means if you install your package with the `devtools` functions like `install`
+it will download and install `enumerations` automatically if required.
+
+
+**Note: You cannot publish a package at CRAN that contains a `Remotes` key in the `DESCRIPTION` file.**
 
 
 
