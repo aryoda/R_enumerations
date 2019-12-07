@@ -35,15 +35,15 @@ Enumerated types
 
 ## Installation
 
-To install the package using the most-recent source code at github you can use the package *devtools*:
+To install the package using the most-recent (development) source code from github you can use the package *devtools*:
 
 ```R
 # install.packages("devtools")
 devtools::install_github("aryoda/R_enumerations")
 ```
 
-If you want to instead only a (pre-)release version to avoid depending on an ever-changing development version
-you can the Git tag name of the release, e. g.:
+If you want to install only a more stable (pre-)release version to avoid depending on an ever-changing development version
+you can use the Git tag name of the release, e. g.:
 
 ```R
 devtools::install_github("aryoda/R_enumerations@v0.3.0-beta")`
